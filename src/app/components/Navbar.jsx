@@ -1,58 +1,57 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
 
-const Navbar = () => {
+export default function Navbar() {
+  const [activeTab, setActiveTab] = useState("Workouts");
+  const [planCount, setPlanCount] = useState(0);
+  const [savedCount, setSavedCount] = useState(0);
+
   return (
-    <div className="navbar bg-base-100 shadow-sm">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              aria-label="Menu"
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {" "}
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
-            </svg>
-          </div>
-          <ul
-            tabIndex={-1}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a>Workout</a>
-            </li>
+    <nav className="w-full max-w-7xl mx-auto bg-[#0a0a0c] text-white border-b border-zinc-800 px-6 py-3 flex items-center justify-between mt-2 mb-2">
+      <div className="flex items-center gap-2 cursor-pointer">
+        <Image src="/logo.png" alt="FitLog Logo" width={28} height={28}></Image>
+        <span className="font-extrabold text-lg tracking-wider uppercase font-sans">
+          FITLOG
+        </span>
+      </div>
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setActiveTab("Workouts")}
+          className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all ${
+            activeTab === "Workouts"
+              ? "bg-[#1e2d08] text-[#a3e635]"
+              : "text-zinc-400 hover:text-white"
+          }`}
+        >
+          Workouts
+        </button>
 
-            <li>
-              <a>My Plan</a>
-            </li>
-          </ul>
+        <button
+          onClick={() => setActiveTab("My Plan")}
+          className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all ${
+            activeTab === "My Plan"
+              ? "bg-[#1e2d08] text-[#a3e635]"
+              : "text-zinc-400 hover:text-white"
+          }`}
+        >
+          My Plan
+        </button>
+      </div>
+      <div className="flex items-center gap-6 text-sm text-zinc-300">
+        <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+          <span>Plan</span>
+          <span className="bg-[#a3e635] text-black font-semibold text-xs rounded-full w-5 h-5 flex items-center justify-center">
+            {planCount}
+          </span>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+          <span>Saved</span>
+          <span className="border border-zinc-700 bg-zinc-900/50 text-zinc-300 text-xs rounded-full w-5 h-5 flex items-center justify-center">
+            {savedCount}
+          </span>
+        </div>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Workout</a>
-          </li>
-          <li>
-            <a>My Plan</a>
-          </li>
-        </ul>
-      </div>
-      <div className="navbar-end">
-        <a className="btn">Button</a>
-      </div>
-    </div>
+    </nav>
   );
-};
-
-export default Navbar;
+}
