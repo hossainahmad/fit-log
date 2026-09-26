@@ -26,7 +26,7 @@ export default function MyPlanPage() {
     removeFromPlan,
     removeFromSaved,
   } = usePlan();
-  const [activeTab, setActiveTab] = useState("plan"); // 'plan' | 'saved'
+  const [activeTab, setActiveTab] = useState("plan");
   const [sortBy, setSortBy] = useState("duration");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -74,7 +74,6 @@ export default function MyPlanPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 text-white min-h-[80vh]">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-black tracking-wider uppercase mb-2">
           MY PLAN

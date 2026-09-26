@@ -18,7 +18,6 @@ export default async function WorkoutDetailPage({ params }) {
 
     if (res.ok) {
       const data = await res.json();
-      // Handle if API returns data wrapped in array or single object
       workout = Array.isArray(data) ? data[0] : data;
     }
   } catch (error) {
@@ -39,7 +38,6 @@ export default async function WorkoutDetailPage({ params }) {
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 text-white">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-        {/* Left Column: Image */}
         <div className="relative w-full aspect-[4/3] sm:aspect-square rounded-2xl bg-[#121318] border border-zinc-800/80 overflow-hidden flex items-center justify-center">
           {imageUrl ? (
             <Image
@@ -56,13 +54,11 @@ export default async function WorkoutDetailPage({ params }) {
           )}
         </div>
 
-        {/* Right Column: Information */}
         <div className="flex flex-col">
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight uppercase mb-3">
             {workoutTitle || "Untitled Lift"}
           </h1>
 
-          {/* Muscle Group Badges */}
           <div className="flex flex-wrap items-center gap-2 mb-6">
             {muscleGroups.map((group, idx) => (
               <span
@@ -79,8 +75,6 @@ export default async function WorkoutDetailPage({ params }) {
               {workout.description}
             </p>
           )}
-
-          {/* Key Specs Table */}
           <div className="bg-[#121318] border border-zinc-800/80 rounded-2xl p-5 mb-6 space-y-3.5">
             <div className="flex justify-between items-center text-xs">
               <span className="text-zinc-400 uppercase tracking-widest font-semibold">
@@ -140,7 +134,6 @@ export default async function WorkoutDetailPage({ params }) {
             </div>
           </div>
 
-          {/* Instructions List */}
           {workout.instructions && workout.instructions.length > 0 && (
             <div className="mb-6">
               <h3 className="text-xs font-extrabold tracking-widest uppercase mb-3 text-white">
@@ -160,7 +153,6 @@ export default async function WorkoutDetailPage({ params }) {
             </div>
           )}
 
-          {/* Interactive Action Buttons */}
           <WorkoutDetailActions workout={workout} />
         </div>
       </div>

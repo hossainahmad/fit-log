@@ -47,7 +47,6 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        {/* Counter Badges */}
         <div className="flex items-center gap-4 text-xs font-bold">
           <Link
             href="/my-plan"
