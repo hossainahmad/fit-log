@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   const [activeTab, setActiveTab] = useState("Workouts");
@@ -11,9 +12,11 @@ export default function Navbar() {
     <nav className="w-full max-w-7xl mx-auto bg-[#0a0a0c] text-white border-b border-zinc-800 px-6 py-3 flex items-center justify-between mt-2 mb-2">
       <div className="flex items-center gap-2 cursor-pointer">
         <Image src="/logo.png" alt="FitLog Logo" width={28} height={28}></Image>
-        <span className="font-extrabold text-lg tracking-wider uppercase font-sans">
-          FITLOG
-        </span>
+        <Link href="/">
+          <span className="font-extrabold text-lg tracking-wider uppercase font-sans">
+            FITLOG
+          </span>
+        </Link>
       </div>
       <div className="flex items-center gap-2">
         <button
