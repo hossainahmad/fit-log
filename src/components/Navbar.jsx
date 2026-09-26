@@ -17,7 +17,6 @@ export default function Navbar() {
           href="/"
           className="flex items-center gap-2 text-white font-black tracking-wider text-xl uppercase"
         >
-          {/* <span className="text-[#a3e635] text-2xl">🏋️</span> */}
           <Image src="/logo.png" alt="FitLog logo" width={28} height={28} />
           <span>FITLOG</span>
         </Link>
