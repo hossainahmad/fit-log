@@ -1,44 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FITLOG 🏋️‍♂️
 
-## Getting Started
+FITLOG is a modern, high-performance web application designed to help users explore workout routines, view exercise specifications, and organize daily fitness plans with persistent state tracking and real-time metric calculations.
 
-First, run the development server:
-FitLog
+---
 
-FitLog is a responsive workout library and daily training log. Browse exercises, review their details, add lifts to today's plan, and save workouts for later.
+## 🛠️ Technologies Used
 
-## Technologies
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Library:** [React](https://react.dev/) (Context API)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Storage:** Browser `localStorage` (with SSR-safe hydration)
 
-- Next.js App Router
-- React
-- Tailwind CSS
-- Lucide React
-- FitLog workout API
+---
 
-## Features
+## ✨ Key Features
 
-- Responsive workout library with categorized workout cards and detail pages
-- Exercise details with equipment, sets, reps, duration, calories, rating, and instructions
-- Today's Plan and Saved lists with browser `localStorage` persistence
-- Live exercise, duration, and calorie summaries with sorting and search
-- Mark planned workouts as done, remove list entries, and see action feedback
-- Five-lift daily plan limit and live navigation counters
-- Loading and not-found pages for route and data states
+1. **Interactive Workout Library:** Search and browse a complete exercise catalog with instant visual previews and detail cards.
+2. **Dynamic Routine Detail Pages:** Access step-by-step instructions, equipment requirements, difficulty rankings, and calorie estimates for each exercise.
+3. **Plan & Bookmark Management:** Add workouts directly to today's schedule or save them for future training sessions.
+4. **Real-Time Badge Counters:** Sync navbar indicators dynamically across pages to keep track of planned and saved items in real time.
+5. **Persistent Metrics Dashboard:** Aggregate total workout duration and calorie expenditure automatically with local storage persistence across sessions.
 
-## Run locally
+---
 
-```bash
-npm install
-npm run dev
-```
+## 🚀 Getting Started
 
-Open [http://localhost:3000](http://localhost:3000).
+### Prerequisites
 
-## Checks
+Make sure you have Node.js installed:
+- **Node.js**: `v18.0.0` or higher
 
-```bash
-npm run lint
-npm run build
-```
+### Installation & Setup
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/hossainahmad/fit-log.git](https://github.com/hossainahmad/fit-log.git)
+   cd fit-log
