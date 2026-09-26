@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -15,12 +16,15 @@ export default function Banner() {
           </h1>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-lg mb-8 font-normal">
             FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
-            into todays plan, and watch the weeks work add up.
+            into today&apos;s plan, and watch the week&apos;s work add up.
           </p>
 
-          <button className="bg-[#a3e635] hover:bg-[#b8f542] text-black font-extrabold text-xs sm:text-sm tracking-wider uppercase px-6 py-3.5 rounded-lg transition-all transform active:scale-95 shadow-md shadow-[#a3e635]/10">
+          <Link
+            href="#library"
+            className="inline-flex bg-[#a3e635] hover:bg-[#b8f542] text-black font-extrabold text-xs sm:text-sm tracking-wider uppercase px-6 py-3.5 rounded-lg transition-all transform active:scale-95 shadow-md shadow-[#a3e635]/10"
+          >
             Browse Workouts
-          </button>
+          </Link>
         </div>
         <div className="relative w-full max-w-70 sm:max-w-85 lg:max-w-95 h-64 sm:h-80 lg:h-96 flex items-center justify-center shrink-0">
           <Image

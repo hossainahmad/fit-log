@@ -1,60 +1,78 @@
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
+
+import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { usePlan } from "@/context/PlanContext";
+import Image from "next/image";
 
 export default function Navbar() {
-  const [activeTab, setActiveTab] = useState("Workouts");
-  const [planCount, setPlanCount] = useState(0);
-  const [savedCount, setSavedCount] = useState(0);
+  const pathname = usePathname();
+  const { planList, savedList } = usePlan();
 
   return (
-    <nav className="w-full max-w-7xl mx-auto bg-[#0a0a0c] text-white border-b border-zinc-800 px-6 py-3 flex items-center justify-between mt-2 mb-2">
-      <div className="flex items-center gap-2 cursor-pointer">
-        <Image src="/logo.png" alt="FitLog Logo" width={28} height={28}></Image>
-        <Link href="/">
-          <span className="font-extrabold text-lg tracking-wider uppercase font-sans">
-            FITLOG
-          </span>
+    <header className="w-full border-b border-zinc-800/80 bg-[#0a0a0c]/90 sticky top-0 z-40 backdrop-blur-md px-4 py-4 sm:px-6">
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-white font-black tracking-wider text-xl uppercase"
+        >
+          {/* <span className="text-[#a3e635] text-2xl">🏋️</span> */}
+          <Image src="/logo.png" alt="FitLog logo" width={28} height={28} />
+          <span>FITLOG</span>
         </Link>
-      </div>
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => setActiveTab("Workouts")}
-          className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all ${
-            activeTab === "Workouts"
-              ? "bg-[#1e2d08] text-[#a3e635]"
-              : "text-zinc-400 hover:text-white"
-          }`}
+        <nav
+          aria-label="Main navigation"
+          className="flex items-center gap-1 sm:gap-3"
         >
-          Workouts
-        </button>
+          <Link
+            href="/"
+            className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all ${
+              pathname === "/" || pathname.startsWith("/workouts")
+                ? "bg-[#181920] text-[#a3e635] border border-zinc-800"
+                : "text-zinc-400 hover:text-white"
+            }`}
+          >
+            Workouts
+          </Link>
 
-        <button
-          onClick={() => setActiveTab("My Plan")}
-          className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all ${
-            activeTab === "My Plan"
-              ? "bg-[#1e2d08] text-[#a3e635]"
-              : "text-zinc-400 hover:text-white"
-          }`}
-        >
-          My Plan
-        </button>
-      </div>
-      <div className="flex items-center gap-6 text-sm text-zinc-300">
-        <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-          <span>Plan</span>
-          <span className="bg-[#a3e635] text-black font-semibold text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            {planCount}
-          </span>
+          <Link
+            href="/my-plan"
+            className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all ${
+              pathname === "/my-plan"
+                ? "bg-[#181920] text-[#a3e635] border border-zinc-800"
+                : "text-zinc-400 hover:text-white"
+            }`}
+          >
+            My Plan
+          </Link>
+        </nav>
+
+        {/* Counter Badges */}
+        <div className="flex items-center gap-4 text-xs font-bold">
+          <Link
+            href="/my-plan"
+            aria-label={`Today's plan, ${planList.length} workouts`}
+            className="flex items-center gap-1.5 text-zinc-400 hover:text-white"
+          >
+            <span>Plan</span>
+            <span className="bg-[#a3e635] text-black min-w-5 h-5 px-1 rounded-full flex items-center justify-center font-black text-[11px]">
+              {planList.length}
+            </span>
+          </Link>
+
+          <Link
+            href="/my-plan"
+            aria-label={`Saved workouts, ${savedList.length} workouts`}
+            className="flex items-center gap-1.5 text-zinc-400 hover:text-white"
+          >
+            <span>Saved</span>
+            <span className="bg-zinc-800 text-zinc-300 min-w-5 h-5 px-1 rounded-full flex items-center justify-center font-extrabold text-[11px] border border-zinc-700">
+              {savedList.length}
+            </span>
+          </Link>
         </div>
-        <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-          <span>Saved</span>
-          <span className="border border-zinc-700 bg-zinc-900/50 text-zinc-300 text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            {savedCount}
-          </span>
-        </div>
       </div>
-    </nav>
+    </header>
   );
 }

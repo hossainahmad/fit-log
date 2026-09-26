@@ -19,7 +19,10 @@ export default async function LibrarySection() {
   return (
     <>
       <Banner></Banner>
-      <section className="w-full max-w-7xl mx-auto px-4 py-8">
+      <section
+        id="library"
+        className="w-full max-w-7xl mx-auto scroll-mt-24 px-4 py-8"
+      >
         <div className="mb-8">
           <h2 className="text-3xl font-black text-white tracking-wider uppercase">
             THE LIBRARY
@@ -34,11 +37,13 @@ export default async function LibrarySection() {
             <WorkoutCard
               key={workout.id || workout._id}
               id={workout.id || workout._id}
-              title={workout.title}
-              muscleGroups={workout.muscleGroups || workout.tags || []} // Pass muscleGroups prop
+              title={workout.title || workout.name}
+              muscleGroups={workout.muscleGroups || workout.tags || []}
               equipment={workout.equipment}
               duration={workout.duration}
-              calories={workout.calories}
+              calories={
+                workout.calories || workout.caloriesBurned || workout.kcal
+              }
               rating={workout.rating}
               imageUrl={workout.image || workout.imageUrl}
             />

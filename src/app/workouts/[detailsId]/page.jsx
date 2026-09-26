@@ -1,6 +1,7 @@
 import React from "react";
-import { CalendarPlus, Bookmark } from "lucide-react";
+import WorkoutDetailActions from "@/components/WorkoutDetailActions";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export default async function WorkoutDetailPage({ params }) {
   const { detailsId } = await params;
@@ -14,50 +15,56 @@ export default async function WorkoutDetailPage({ params }) {
         cache: "no-store",
       },
     );
+
     if (res.ok) {
-      workout = await res.json();
+      const data = await res.json();
+      // Handle if API returns data wrapped in array or single object
+      workout = Array.isArray(data) ? data[0] : data;
     }
   } catch (error) {
-    console.error("Error fetching workout detail:", error);
+    console.error("Failed to fetch workout details:", error);
   }
 
-  if (!workout) {
-    return (
-      <div className="min-h-screen bg-[#0a0a0c] text-white flex items-center justify-center">
-        <p className="text-zinc-400">Workout not found.</p>
-      </div>
-    );
-  }
+  if (!workout) notFound();
+
+  const imageUrl = workout.image || workout.imageUrl || workout.img;
+  const muscleGroups = workout.muscleGroups || workout.tags || [];
+  const workoutTitle = workout.title || workout.name || "Untitled Lift";
+  const workoutCalories = [
+    workout.caloriesBurned,
+    workout.calories,
+    workout.kcal,
+  ].find((value) => value !== undefined && value !== null && value !== "");
 
   return (
-    <div className="min-h-screen bg-[#0a0a0c] text-white py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-        <div className="relative w-full aspect-4/3 sm:aspect-square rounded-2xl bg-zinc-900 border border-zinc-800/80 overflow-hidden flex items-center justify-center">
-          {workout.image || workout.imageUrl ? (
+    <div className="max-w-6xl mx-auto px-4 py-10 text-white">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+        {/* Left Column: Image */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-square rounded-2xl bg-[#121318] border border-zinc-800/80 overflow-hidden flex items-center justify-center">
+          {imageUrl ? (
             <Image
-              width={588}
-              height={735}
-              src={workout.image || workout.imageUrl}
-              alt="Workout Mindset"
+              src={imageUrl}
+              alt={workoutTitle}
               className="w-full h-full object-cover"
+              width={392}
+              height={192}
             />
           ) : (
-            <div className="text-zinc-600 font-medium uppercase tracking-wider text-sm">
+            <div className="text-zinc-600 font-medium uppercase tracking-wider text-xs">
               No Image Available
             </div>
           )}
         </div>
 
+        {/* Right Column: Information */}
         <div className="flex flex-col">
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight uppercase mb-3">
-            {workout.title}
+            {workoutTitle || "Untitled Lift"}
           </h1>
 
-          <p className="text-zinc-400 text-sm leading-relaxed mb-6 font-normal">
-            {workout.description}
-          </p>
-          <div className="flex flex-wrap items-center gap-2 mb-8">
-            {(workout.muscleGroups || workout.tags || []).map((group, idx) => (
+          {/* Muscle Group Badges */}
+          <div className="flex flex-wrap items-center gap-2 mb-6">
+            {muscleGroups.map((group, idx) => (
               <span
                 key={idx}
                 className="bg-[#a3e635] text-black font-extrabold text-xs tracking-wider uppercase px-3 py-1 rounded-full"
@@ -66,13 +73,21 @@ export default async function WorkoutDetailPage({ params }) {
               </span>
             ))}
           </div>
-          <div className="bg-[#121318] border border-zinc-800/80 rounded-2xl p-5 mb-8 space-y-3.5">
+
+          {workout.description && (
+            <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+              {workout.description}
+            </p>
+          )}
+
+          {/* Key Specs Table */}
+          <div className="bg-[#121318] border border-zinc-800/80 rounded-2xl p-5 mb-6 space-y-3.5">
             <div className="flex justify-between items-center text-xs">
               <span className="text-zinc-400 uppercase tracking-widest font-semibold">
                 EQUIPMENT
               </span>
               <span className="text-white font-medium">
-                {workout.equipment}
+                {workout.equipment || "N/A"}
               </span>
             </div>
             <div className="flex justify-between items-center text-xs">
@@ -80,74 +95,73 @@ export default async function WorkoutDetailPage({ params }) {
                 DIFFICULTY
               </span>
               <span className="text-white font-medium">
-                {workout.difficulty}
+                {workout.difficulty || "Intermediate"}
               </span>
             </div>
             <div className="flex justify-between items-center text-xs">
               <span className="text-zinc-400 uppercase tracking-widest font-semibold">
                 SETS
               </span>
-              <span className="text-white font-medium">{workout.sets}</span>
+              <span className="text-white font-medium">
+                {workout.sets || "N/A"}
+              </span>
             </div>
             <div className="flex justify-between items-center text-xs">
               <span className="text-zinc-400 uppercase tracking-widest font-semibold">
                 REPS
               </span>
-              <span className="text-white font-medium">{workout.reps}</span>
+              <span className="text-white font-medium">
+                {workout.reps || "N/A"}
+              </span>
             </div>
             <div className="flex justify-between items-center text-xs">
               <span className="text-zinc-400 uppercase tracking-widest font-semibold">
                 DURATION
               </span>
-              <span className="text-white font-medium">{workout.duration}</span>
+              <span className="text-white font-medium">
+                {workout.duration ? `${workout.duration} min` : "N/A"}
+              </span>
             </div>
             <div className="flex justify-between items-center text-xs">
               <span className="text-zinc-400 uppercase tracking-widest font-semibold">
                 CALORIES
               </span>
               <span className="text-white font-medium">
-                {workout.caloriesBurned}
+                {workoutCalories ? `${workoutCalories} kcal` : "N/A"}
               </span>
             </div>
             <div className="flex justify-between items-center text-xs">
               <span className="text-zinc-400 uppercase tracking-widest font-semibold">
                 RATING
               </span>
-              <span className="text-white font-medium">{workout.rating}</span>
+              <span className="text-white font-medium">
+                {workout.rating || "4.8"}
+              </span>
             </div>
           </div>
 
+          {/* Instructions List */}
           {workout.instructions && workout.instructions.length > 0 && (
-            <div className="mb-8">
-              <h3 className="text-sm font-extrabold tracking-widest uppercase mb-4 text-white">
+            <div className="mb-6">
+              <h3 className="text-xs font-extrabold tracking-widest uppercase mb-3 text-white">
                 INSTRUCTIONS
               </h3>
-              <ol className="space-y-3">
+              <ol className="space-y-2.5">
                 {workout.instructions.map((step, idx) => (
                   <li
                     key={idx}
-                    className="text-xs sm:text-sm text-zinc-300 leading-relaxed flex gap-2"
+                    className="text-xs text-zinc-300 leading-relaxed flex gap-2"
                   >
-                    <span className="font-semibold text-zinc-400">
-                      {idx + 1}.
-                    </span>
+                    <span className="font-bold text-[#a3e635]">{idx + 1}.</span>
                     <span>{step}</span>
                   </li>
                 ))}
               </ol>
             </div>
           )}
-          <div className="flex flex-wrap items-center gap-4">
-            <button className="flex items-center justify-center gap-2 bg-[#a3e635] hover:bg-[#b8f542] text-black font-extrabold text-xs sm:text-sm tracking-wider uppercase px-5 py-3 rounded-xl transition-all">
-              <CalendarPlus className="w-4 h-4" />
-              <span>Add to todays plan</span>
-            </button>
 
-            <button className="flex items-center justify-center gap-2 bg-[#121318] hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all">
-              <Bookmark className="w-4 h-4" />
-              <span>Save for later</span>
-            </button>
-          </div>
+          {/* Interactive Action Buttons */}
+          <WorkoutDetailActions workout={workout} />
         </div>
       </div>
     </div>
