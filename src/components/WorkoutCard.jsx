@@ -28,14 +28,12 @@ export default function WorkoutCard({
   const displayGroups =
     muscleGroups && muscleGroups.length > 0 ? muscleGroups : tags;
 
-  // Format duration cleanly
   const formattedDuration = duration
     ? typeof duration === "number" || !duration.toString().includes("min")
       ? `${duration} min`
       : duration
     : "25 min";
 
-  // Format calories cleanly
   const displayCalories = [calories, caloriesBurned, kcal].find(
     (value) => value !== undefined && value !== null && value !== "",
   );
