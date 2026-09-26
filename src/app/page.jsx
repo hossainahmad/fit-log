@@ -35,10 +35,10 @@ export default async function LibrarySection() {
               key={workout.id || workout._id}
               id={workout.id || workout._id}
               title={workout.title}
-              tags={workout.tags || workout.category}
+              muscleGroups={workout.muscleGroups || workout.tags || []} // Pass muscleGroups prop
               equipment={workout.equipment}
               duration={workout.duration}
-              calories={workout.caloriesBurned}
+              calories={workout.calories}
               rating={workout.rating}
               imageUrl={workout.image || workout.imageUrl}
             />

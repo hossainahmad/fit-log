@@ -1,12 +1,8 @@
 import React from "react";
 import { CalendarPlus, Bookmark } from "lucide-react";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-// import { notFound } from "next-[#0a0a0c]";
 
 export default async function WorkoutDetailPage({ params }) {
-  // Await params for Next.js 15+ compatibility
   const { detailsId } = await params;
 
   let workout = null;
@@ -36,7 +32,6 @@ export default async function WorkoutDetailPage({ params }) {
   return (
     <div className="min-h-screen bg-[#0a0a0c] text-white py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-        {/* Left Column: Image */}
         <div className="relative w-full aspect-4/3 sm:aspect-square rounded-2xl bg-zinc-900 border border-zinc-800/80 overflow-hidden flex items-center justify-center">
           {workout.image || workout.imageUrl ? (
             <Image
@@ -61,15 +56,13 @@ export default async function WorkoutDetailPage({ params }) {
           <p className="text-zinc-400 text-sm leading-relaxed mb-6 font-normal">
             {workout.description}
           </p>
-
-          {/* Tags */}
-          <div className="flex items-center gap-2 mb-8">
-            {(workout.tags || []).map((tag, idx) => (
+          <div className="flex flex-wrap items-center gap-2 mb-8">
+            {(workout.muscleGroups || workout.tags || []).map((group, idx) => (
               <span
                 key={idx}
                 className="bg-[#a3e635] text-black font-extrabold text-xs tracking-wider uppercase px-3 py-1 rounded-full"
               >
-                {tag}
+                {group}
               </span>
             ))}
           </div>
